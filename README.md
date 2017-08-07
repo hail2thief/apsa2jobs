@@ -1,2 +1,3 @@
 # apsa2jobs
-Update on apsa2jobs function from the muRL package
+
+Update to the apsahtml2csv function from the muRL package
