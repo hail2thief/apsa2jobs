@@ -1,3 +1,4 @@
+library(XML)
 apsahtml2csv = function(directory, file.name, file.ext = ".htm", verbose = TRUE){
   
   jobs = dir(directory, full.names = TRUE)[grep(file.ext, dir(directory))]
@@ -44,7 +45,7 @@ apsahtml2csv = function(directory, file.name, file.ext = ".htm", verbose = TRUE)
     assign('deadline', extracted_info)
     
     # job details
-    xpath = '//span'
+    xpath = '//*[(@id = "dnn_ctr4356_ViewJobBank_ViewJob_lb_JobText")]//span'
     extracted_info = 
       xpathSApply(data, xpath, xmlValue)
     if(length(extracted_info) == 0)
@@ -136,10 +137,11 @@ apsahtml2csv = function(directory, file.name, file.ext = ".htm", verbose = TRUE)
     
     
    
-    df = data.frame(jobid = jobid, dept = dept, institution = inst,
+    df = data.frame(jobid = jobid, 
                      subfield = subfield, startdate = startdate, 
-                     deadline = deadline, position = position, 
-                     contact = contact, details) %>% 
+                     deadline = deadline, position = position, dept = dept,
+                     institution = inst, 
+                     contact = contact, details = details) %>% 
       as.data.frame()
     
     
