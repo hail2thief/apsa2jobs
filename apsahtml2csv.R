@@ -43,6 +43,17 @@ apsahtml2csv = function(directory, file.name, file.ext = ".htm", verbose = TRUE)
     }
     assign('deadline', extracted_info)
     
+    # job details
+    xpath = '//span'
+    extracted_info = 
+      xpathSApply(data, xpath, xmlValue)
+    if(length(extracted_info) == 0)
+    {
+      extracted_info = 'N/A'
+    }
+    assign('details', extracted_info)
+    
+    
     # position
     xpath = '//*[(@id = "dnn_ctr4356_ViewJobBank_ViewJob_lb_Title")]'
     extracted_info = 
@@ -125,11 +136,10 @@ apsahtml2csv = function(directory, file.name, file.ext = ".htm", verbose = TRUE)
     
     
    
-    df = data.frame(jobid = jobid, 
+    df = data.frame(jobid = jobid, dept = dept, institution = inst,
                      subfield = subfield, startdate = startdate, 
-                     deadline = deadline, position = position, dept = dept,
-                     institution = inst, 
-                     contact = contact) %>% 
+                     deadline = deadline, position = position, 
+                     contact = contact, details) %>% 
       as.data.frame()
     
     
