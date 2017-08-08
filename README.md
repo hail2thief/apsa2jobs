@@ -1,3 +1,3 @@
-# apsa2jobs
+# apsahtml2csv
 
-Update to the apsahtml2csv function from the muRL package
+A quick and dirty update to the function from the `muRL` package for turning html pages from the APSA EJobs site into a nicely organized csv file. Changes to the Ejobs site has significantly limited the original function's application. 
