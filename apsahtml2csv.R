@@ -1,6 +1,5 @@
-library(XML)
 apsahtml2csv = function(directory, file.name, file.ext = ".htm", verbose = TRUE){
-  
+  require(XML)
   jobs = dir(directory, full.names = TRUE)[grep(file.ext, dir(directory))]
   
   for(i in 1:length(jobs)){
@@ -53,6 +52,20 @@ apsahtml2csv = function(directory, file.name, file.ext = ".htm", verbose = TRUE)
       extracted_info = 'N/A'
     }
     assign('details', extracted_info)
+    
+   # job details > url
+    library(stringr)
+    xpath = '//*[(@id = "dnn_ctr4356_ViewJobBank_ViewJob_lb_JobText")]//text()' # use /text() to keep <br>
+    tmp = xpathSApply(data, xpath, xmlValue) 
+    url_pattern <- "http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\\(\\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+"
+    extracted_info = tmp %>% str_extract(. , url_pattern) %>% .[!is.na(.)] %>% unique
+      
+    if(length(extracted_info) == 0)
+    {
+      extracted_info = 'N/A'
+    }
+    assign('url', extracted_info)
+    ####
     
     
     # position
@@ -141,7 +154,7 @@ apsahtml2csv = function(directory, file.name, file.ext = ".htm", verbose = TRUE)
                      subfield = subfield, startdate = startdate, 
                      deadline = deadline, position = position, dept = dept,
                      institution = inst, 
-                     contact = contact, details = details) %>% 
+                     contact = contact, details = details, url = url) %>% 
       as.data.frame()
     
     
@@ -157,4 +170,5 @@ apsahtml2csv = function(directory, file.name, file.ext = ".htm", verbose = TRUE)
   if(verbose == TRUE){
     cat("Data stored as file `", file.name, "'.  \nThe current working directory is ", getwd(), "\n", sep="")
   }
+  return(myjobs)
 }
