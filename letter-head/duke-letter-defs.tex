@@ -1,0 +1,110 @@
+% Define Duke official colors
+% to colorize links in document. See color specification below
+\usepackage[x11names]{xcolor}
+\definecolor{dukeblue}{cmyk}{100,75,6, 24}
+\definecolor{dukegray}{cmyk}{22,15,11,32}
+
+% Measurements are taken directly from the guide
+\usepackage[top=1in,left=1.5in,bottom=0.5in,right=0.625in]{geometry}
+\usepackage{graphicx}
+\usepackage[colorlinks=true,
+            urlcolor=RoyalBlue4,
+            pdfborder={0 0 0},
+            ]{hyperref}
+\usepackage[absolute]{textpos}
+\usepackage{ifthen}
+\usepackage{soul}
+\usepackage{fontspec} % Requires XeTeX
+\setmainfont{Minion Pro} % main font
+
+
+
+% --- For placement of the horizontal line
+\usepackage{tikz}
+\usetikzlibrary{calc}
+
+% --- A nice serif font (palatino), but not the prescribed nonfree ITC stone
+% \usepackage[sc,osf]{mathpazo}
+\linespread{1.05}
+
+% Remove paragraph indentation
+\parindent0pt
+\setlength{\parskip}{0.8\baselineskip}
+\raggedright
+\pagestyle{empty}
+% Ensure consistency in the footer
+\urlstyle{sf}
+
+\providecommand\Dukefromname{Juan Fernando Tellez}
+% \providecommand\Dukefromtitle{Assistant Professor}
+% \providecommand\Dukefromdegree{Ph.D.}
+\providecommand\Dukefromdept{Department of Political Science}
+\providecommand\Dukefromaddress{Gross Hall, 140 Science Dr, Durham, NC 27708}
+\providecommand\Dukefromtel{954.257.1554}
+%\providecommand\Dukefromfax{(509) 335-6666}
+\providecommand\Dukefromemail{\href{mailto:juan.f.tellez@gmail.com}{juan.f.tellez@gmail.com}}
+\providecommand\Dukefromweb{\href{http://www.juanftellez.com/}{http://www.juanftellez.com}}
+\providecommand\Duketoname{Dr.~Wiseman}
+\providecommand\Duketoaddress{Department of Wisemen\\
+                            Wise State University \\
+                            Wisetown, Wise\ \ 12345-6789\\
+                            USA}
+\providecommand\Dukedate{\today}
+\providecommand\Dukeopening{Dear \Duketoname}
+\providecommand\Dukeclosing{Sincerely}
+% Update this and the next line to the correct path
+\providecommand\Dukesignaturefile{lenin.jpg}
+\providecommand\Dukelogofile{duke-logo3.png}
+\providecommand\Dukeenclosure{}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+
+\renewcommand{\footrulewidth}{0pt}
+\fancyfoot{}
+\fancyfoot[L]{%
+    {\footnotesize\color{dukeblue}\sffamily
+    \Dukefromaddress\\[-0.1\baselineskip]
+    \Dukefromtel\ \textbullet\ \Dukefromemail\ \textbullet\ \Dukefromweb}\color{dukeblue}}
+
+\fancyhead{}
+\fancyhead[C]{%
+    \begin{textblock*}{2in}[-.5,1](1.5in,1.33in)
+        \includegraphics[width=4in]{\Dukelogofile}
+    \end{textblock*}
+    % \begin{textblock*}{6.375in}(1.5in,1.4in)   % 6.375=8.5 - 1.5 - 0.625
+    %     \sffamily
+    %     \hfill \color{Dukegray} \Dukefromdept
+    %     \\ \hfill \Dukefromname, \Dukefromdegree
+    % \end{textblock*}
+    % \begin{tikzpicture}[remember picture,overlay]
+    %     \draw[color=dukeblue,line width=0.7pt] (current page.north west)+(1.5in,-1.33in) -- ($(-0.625in,-1.33in)+(current page.north east)$);
+    % \end{tikzpicture}
+    }
+\renewcommand{\headrulewidth}{0pt}
+
+
+\AtBeginDocument{
+    % Text lines should be less than 6in long
+    \newgeometry{top=2in,left=1.5in,bottom=1.2in,right=1in}
+
+    \Dukedate
+    \bigskip
+
+    \Duketoname\ifthenelse{\equal{\Duketoname}{}}{}{\\}
+    \Duketoaddress
+    \bigskip
+
+    \Dukeopening\par
+    }
+
+\AtEndDocument{
+    \par\vspace{2ex}
+    \Dukeclosing,
+
+    \ifthenelse{\equal{\Dukesignaturefile}{}}{\bigskip\bigskip}{\includegraphics[width=1.2in]{\Dukesignaturefile}\\[-0.2\baselineskip]}
+
+    \Dukefromname \\
+    % \Dukefromtitle\ifthenelse{\equal{\Dukefromtitle}{}}{}{\\}
+    \Dukeenclosure
+    }
